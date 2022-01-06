@@ -1,24 +1,16 @@
 import React from "react";
-import {
-  Box,
-  Grid,
-  Typography,
-  TextField,
-  Button,
-  MenuItem,
-} from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
+import { Box, Grid, Typography, TextField, MenuItem } from "@mui/material";
 import states from "../data/states.json";
 import jobDepartments from "../data/jobDepartments.json";
 import { useDispatch } from "react-redux";
-import { SHOWMODAL } from "../redux/reducers/displayModal";
+
 
 const Form = () => {
   const dispatch = useDispatch();
   const saveEmployee = (e) => {
     e.preventDefault();
     dispatch({
-      type: SHOWMODAL,
+      //type: SHOWMODAL,
     });
   };
   return (
@@ -109,20 +101,9 @@ const Form = () => {
                 </div>
               );
             })}
-          </TextField>{" "}
+          </TextField>
         </Grid>
       </Grid>
-      <div>
-        <Button
-          type="submit"
-          sx={{ my: "1rem" }}
-          size="large"
-          variant="contained"
-          endIcon={<SendIcon />}
-        >
-          Save
-        </Button>
-      </div>
     </Box>
   );
 };

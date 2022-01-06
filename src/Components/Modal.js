@@ -1,25 +1,39 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { HIDEMODAL } from "../redux/reducers/displayModal";
+import React, { useEffect, useRef } from "react";
+import { IconButton } from "@mui/material";
+import Close from "@mui/icons-material/Close";
 
-const Modal = () => {
-  const dispatch = useDispatch();
-  const showModal = useSelector((state) => state.displayModal.show);
-  const handleClose = () => {
-    dispatch({
-      type: HIDEMODAL,
-    });
+const Modal = ({ isOpen, onClose, closeOutside }) => {
+  const myRef = useRef();
+
+  const handleClickOutside = (e) => {
+    if (!myRef.current.contains(e.target)) {
+      onClose();
+    }
   };
-  const showHideModal = showModal
-    ? "modal display-block"
-    : "modal display-none";
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+    };
+  });
   return (
-    <div id="confirmation" className={showHideModal}>
-      <section className="modal-main">
-        Employee Created!
-        <button type="button" onClick={handleClose}>
-          Close
-        </button>
+    <div
+      id="reactSimpleModal"
+      className={`RSmodal ${isOpen ? "show" : "hide"}`}
+    >
+      <section className="RSmodal-main" ref={closeOutside ? myRef : null}>
+        <IconButton
+          color="primary"
+          aria-label="delete"
+          onClick={onClose}
+          size="large"
+        >
+          <Close className="close" fontSize="inherit" />
+        </IconButton>
+        <h1>Employee Created!</h1>
       </section>
     </div>
   );

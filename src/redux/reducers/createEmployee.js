@@ -2,7 +2,7 @@
 export const EMPLOYEE_CREATED = "EMPLOYEE_CREATED";
 
 const initialState = {
-  //
+  show: true,
 };
 
 // Set a state default value
@@ -15,7 +15,7 @@ const createEmployeeReducer = (state = initialState, action) => {
       return {
         // copy data and update the copy
         ...state,
-        //
+        show: true,
       };
     default:
       return state;

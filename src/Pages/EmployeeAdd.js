@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Typography } from "@mui/material";
 import Form from "../Components/Form";
 import Modal from "../Components/Modal";
+import { Button } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 
 const EmployeeAdd = () => {
+  const [isOpen, setOpen] = useState(false);
   return (
     <>
       <Typography
@@ -28,7 +31,21 @@ const EmployeeAdd = () => {
           Create Employee
         </Typography>
         <Form />
-        <Modal />
+        <Button
+          type="submit"
+          sx={{ my: "1rem" }}
+          size="large"
+          variant="contained"
+          endIcon={<SendIcon />}
+          onClick={() => setOpen(true)}
+        >
+          Save
+        </Button>
+        <Modal
+          isOpen={isOpen}
+          onClose={() => setOpen(false)}
+          closeOutside={true}
+        />
       </div>
     </>
   );
