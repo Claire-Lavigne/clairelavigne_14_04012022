@@ -33,7 +33,12 @@ const Form = () => {
       data.employee.firstname === undefined ||
       data.employee.lastname === undefined ||
       data.employee.birthdate === undefined ||
-      data.employee.startdate === undefined
+      data.employee.startdate === undefined ||
+      data.employee.department === undefined ||
+      data.employee.addressStreet === undefined ||
+      data.employee.addressCity === undefined ||
+      data.employee.addressState === undefined ||
+      data.employee.addressZipcode === undefined
     ) {
       setDisplayError(true);
       return false;
