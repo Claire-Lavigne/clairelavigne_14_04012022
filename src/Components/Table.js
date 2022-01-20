@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import {
   Paper,
+  TextField,
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -9,19 +11,21 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TableSortLabel,
 } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 
 const columns = [
-  { id: "id", label: "ID", minWidth: 50 },
-  { id: "firstname", label: "First Name", minWidth: 170 },
-  { id: "lastname", label: "Last Name", minWidth: 170 },
-  { id: "birthdate", label: "Date of Birth", minWidth: 170 },
-  { id: "startdate", label: "Start Date", minWidth: 170 },
-  { id: "department", label: "Department", minWidth: 170 },
-  { id: "street", label: "Street", minWidth: 170 },
-  { id: "city", label: "City", minWidth: 170 },
-  { id: "state", label: "State", minWidth: 170 },
-  { id: "zipcode", label: "Zip Code", minWidth: 170 },
+  { id: "id", label: "ID", minWidth: 90 },
+  { id: "firstname", label: "First Name", minWidth: 100 },
+  { id: "lastname", label: "Last Name", minWidth: 100 },
+  { id: "birthdate", label: "Date of Birth", minWidth: 120 },
+  { id: "startdate", label: "Start Date", minWidth: 100 },
+  { id: "department", label: "Department", minWidth: 120 },
+  { id: "street", label: "Street", minWidth: 150 },
+  { id: "city", label: "City", minWidth: 90 },
+  { id: "state", label: "State", minWidth: 30 },
+  { id: "zipcode", label: "Zip Code", minWidth: 90 },
 ];
 
 function createData(
@@ -50,8 +54,25 @@ function createData(
   };
 }
 
-const EmployeeTable = () => {
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+const EmployeeTable = ({ order, orderBy, onRequestSort }) => {
   const allEmployees = useSelector((state) => state.employees.user);
+
   const rows = allEmployees.map((user) =>
     createData(
       user.id,
@@ -67,6 +88,7 @@ const EmployeeTable = () => {
     )
   );
 
+  const [filteredRows, setFilteredRows] = useState(rows);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -79,10 +101,36 @@ const EmployeeTable = () => {
     setPage(0);
   };
 
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
+  };
+
+  const requestSearch = (e) => {
+    if (e) {
+      const rowsToShow = rows.filter((row) => Object.values(row).includes(e));
+      setFilteredRows(rowsToShow);
+    } else {
+      setFilteredRows(rows);
+    }
+  };
+
+  console.log("filtered rows : ", filteredRows);
+  console.log("rows : ", rows);
+
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
+    <Paper
+      sx={{ width: "75%", overflow: "hidden", margin: "2.5em" }}
+      align="center"
+    >
+      <TextField
+        id="outlined-search"
+        label="Search field"
+        type="search"
+        sx={{ margin: "2em" }}
+        onChange={(e) => requestSearch(e.target.value.trim())}
+      />
       <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table size="small" stickyHeader>
           <TableHead>
             <TableRow>
               {columns.map((column) => (
@@ -90,14 +138,28 @@ const EmployeeTable = () => {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
+                  sortDirection={orderBy === column.id ? order : false}
                 >
-                  {column.label}
+                  <TableSortLabel
+                    active={orderBy === column.id}
+                    direction={orderBy === column.id ? order : "asc"}
+                    onClick={createSortHandler(column.id)}
+                  >
+                    {column.label}
+                    {orderBy === column.id ? (
+                      <Box component="span" sx={visuallyHidden}>
+                        {order === "desc"
+                          ? "sorted descending"
+                          : "sorted ascending"}
+                      </Box>
+                    ) : null}
+                  </TableSortLabel>
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {filteredRows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
@@ -119,7 +181,7 @@ const EmployeeTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[10, 25, 50, 100, { value: -1, label: "All" }]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}

@@ -110,6 +110,8 @@ const Form = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              type="date"
+              value={user.birthdate || "1955-01-01"}
               error={displayError && user.birthdate === undefined}
               required
               id="dateOfBirth"
@@ -125,6 +127,8 @@ const Form = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              type="date"
+              value={user.startdate || "1965-01-01"}
               error={displayError && user.startdate === undefined}
               required
               id="startDate"
