@@ -80,7 +80,7 @@ const Form = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={user.firstname === undefined}
+              error={displayError && user.firstname === undefined}
               required
               id="firstName"
               label="First Name"
@@ -95,7 +95,7 @@ const Form = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={user.lastname === undefined}
+              error={displayError && user.lastname === undefined}
               required
               id="lasName"
               label="Last Name"
@@ -110,7 +110,7 @@ const Form = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={user.birthdate === undefined}
+              error={displayError && user.birthdate === undefined}
               required
               id="dateOfBirth"
               label="Date of Birth"
@@ -125,7 +125,7 @@ const Form = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={user.startdate === undefined}
+              error={displayError && user.startdate === undefined}
               required
               id="startDate"
               label="Start Date"
@@ -140,7 +140,7 @@ const Form = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={user.department === undefined}
+              error={displayError && user.department === undefined}
               required
               id="jobDepartment"
               label="Department"
@@ -163,13 +163,13 @@ const Form = () => {
             </TextField>
           </Grid>
         </Grid>
-        <Typography my={2} component="h3" variant="h6" fullWidth>
+        <Typography my={2} component="h3" variant="h6">
           Address
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={user.street === undefined}
+              error={displayError && user.street === undefined}
               required
               id="street"
               label="Street"
@@ -184,7 +184,7 @@ const Form = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={user.city === undefined}
+              error={displayError && user.city === undefined}
               required
               id="city"
               label="City"
@@ -199,7 +199,7 @@ const Form = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={user.state === undefined}
+              error={displayError && user.state === undefined}
               required
               id="state"
               label="State"
@@ -223,7 +223,7 @@ const Form = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={user.zipcode === undefined}
+              error={displayError && user.zipcode === undefined}
               required
               id="zipCode"
               label="Zip Code"

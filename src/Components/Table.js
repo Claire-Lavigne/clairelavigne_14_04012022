@@ -49,40 +49,23 @@ function createData(
     zipcode,
   };
 }
-/*
-const rows = [
-  createData(
-    id,
-    firstname,
-    lastname,
-    birthdate,
-    startdate,
-    department,
-    street,
-    city,
-    state,
-    zipcode
-  ),
-];*/
 
 const EmployeeTable = () => {
   const allEmployees = useSelector((state) => state.employees.user);
-  const rows = [
-    allEmployees.map((user) =>
-      createData(
-        user.id,
-        user.firstname,
-        user.lastname,
-        user.birthdate,
-        user.startdate,
-        user.department,
-        user.street,
-        user.city,
-        user.state,
-        user.zipcode
-      )
-    ),
-  ];
+  const rows = allEmployees.map((user) =>
+    createData(
+      user.id,
+      user.firstname,
+      user.lastname,
+      user.birthdate,
+      user.startdate,
+      user.department,
+      user.street,
+      user.city,
+      user.state,
+      user.zipcode
+    )
+  );
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);

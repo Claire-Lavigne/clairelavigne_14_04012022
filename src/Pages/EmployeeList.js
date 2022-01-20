@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-// import EmployeeTable from "../Components/Table";
+import EmployeeTable from "../Components/Table";
 
 const EmployeeList = () => {
   const allEmployees = useSelector((state) => state.employees.user);
@@ -61,10 +61,10 @@ const EmployeeList = () => {
               <tr role="row">
                 <th
                   className="sorting_asc"
-                  tabindex="0"
+                  tabIndex="0"
                   aria-controls="employee-table"
-                  rowspan="1"
-                  colspan="1"
+                  rowSpan="1"
+                  colSpan="1"
                   aria-sort="ascending"
                   aria-label="First Name: activate to sort column descending"
                 >
@@ -72,10 +72,10 @@ const EmployeeList = () => {
                 </th>
                 <th
                   className="sorting_asc"
-                  tabindex="0"
+                  tabIndex="0"
                   aria-controls="employee-table"
-                  rowspan="1"
-                  colspan="1"
+                  rowSpan="1"
+                  colSpan="1"
                   aria-sort="ascending"
                   aria-label="First Name: activate to sort column descending"
                 >
@@ -83,80 +83,80 @@ const EmployeeList = () => {
                 </th>
                 <th
                   className="sorting"
-                  tabindex="0"
+                  tabIndex="0"
                   aria-controls="employee-table"
-                  rowspan="1"
-                  colspan="1"
+                  rowSpan="1"
+                  colSpan="1"
                   aria-label="Last Name: activate to sort column ascending"
                 >
                   Last Name
                 </th>
                 <th
                   className="sorting"
-                  tabindex="0"
+                  tabIndex="0"
                   aria-controls="employee-table"
-                  rowspan="1"
-                  colspan="1"
+                  rowSpan="1"
+                  colSpan="1"
                   aria-label="Start Date: activate to sort column ascending"
                 >
                   Start Date
                 </th>
                 <th
                   className="sorting"
-                  tabindex="0"
+                  tabIndex="0"
                   aria-controls="employee-table"
-                  rowspan="1"
-                  colspan="1"
+                  rowSpan="1"
+                  colSpan="1"
                   aria-label="Department: activate to sort column ascending"
                 >
                   Department
                 </th>
                 <th
                   className="sorting"
-                  tabindex="0"
+                  tabIndex="0"
                   aria-controls="employee-table"
-                  rowspan="1"
-                  colspan="1"
+                  rowSpan="1"
+                  colSpan="1"
                   aria-label="Date of Birth: activate to sort column ascending"
                 >
                   Date of Birth
                 </th>
                 <th
                   className="sorting"
-                  tabindex="0"
+                  tabIndex="0"
                   aria-controls="employee-table"
-                  rowspan="1"
-                  colspan="1"
+                  rowSpan="1"
+                  colSpan="1"
                   aria-label="Street: activate to sort column ascending"
                 >
                   Street
                 </th>
                 <th
                   className="sorting"
-                  tabindex="0"
+                  tabIndex="0"
                   aria-controls="employee-table"
-                  rowspan="1"
-                  colspan="1"
+                  rowSpan="1"
+                  colSpan="1"
                   aria-label="City: activate to sort column ascending"
                 >
                   City
                 </th>
                 <th
                   className="sorting"
-                  tabindex="0"
+                  tabIndex="0"
                   aria-controls="employee-table"
-                  rowspan="1"
-                  colspan="1"
+                  rowSpan="1"
+                  colSpan="1"
                   aria-label="State: activate to sort column ascending"
                 >
                   State
                 </th>
                 <th
                   className="sorting"
-                  tabindex="0"
+                  tabIndex="0"
                   aria-controls="employee-table"
-                  rowspan="1"
-                  colspan="1"
+                  rowSpan="1"
+                  colSpan="1"
                   aria-label="Zip Code: activate to sort column ascending"
                 >
                   Zip Code
@@ -193,39 +193,39 @@ const EmployeeList = () => {
             id="employee-table_paginate"
           >
             <a
-              href
+              href="#"
               className="paginate_button previous disabled"
               aria-controls="employee-table"
               data-dt-idx="0"
-              tabindex="-1"
+              tabIndex="-1"
               id="employee-table_previous"
             >
               Previous
             </a>
             <span>
               <a
-                href
+                href="#"
                 className="paginate_button current"
                 aria-controls="employee-table"
                 data-dt-idx="1"
-                tabindex="0"
+                tabIndex="0"
               >
                 1
               </a>
             </span>
             <a
-              href
+              href="#"
               className="paginate_button next disabled"
               aria-controls="employee-table"
               data-dt-idx="2"
-              tabindex="-1"
+              tabIndex="-1"
               id="employee-table_next"
             >
               Next
             </a>
           </div>
         </div>
-        {/* <EmployeeTable /> */}
+        <EmployeeTable />
       </div>
     </>
   );
