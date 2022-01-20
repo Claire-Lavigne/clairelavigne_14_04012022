@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 // import EmployeeTable from "../Components/Table";
 
 const EmployeeList = () => {
+  const allEmployees = useSelector((state) => state.employees.user);
   return (
     <>
       <div id="employee-div" className="container">
@@ -57,6 +59,17 @@ const EmployeeList = () => {
           >
             <thead>
               <tr role="row">
+                <th
+                  className="sorting_asc"
+                  tabindex="0"
+                  aria-controls="employee-table"
+                  rowspan="1"
+                  colspan="1"
+                  aria-sort="ascending"
+                  aria-label="First Name: activate to sort column descending"
+                >
+                  ID
+                </th>
                 <th
                   className="sorting_asc"
                   tabindex="0"
@@ -151,17 +164,20 @@ const EmployeeList = () => {
               </tr>
             </thead>
             <tbody>
-              <tr role="row" className="odd">
-                <td className="sorting_1"></td>
-                <td></td>
-                <td></td>
-                <td>Sales</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>AL</td>
-                <td></td>
-              </tr>
+              {allEmployees.map((user, i) => (
+                <tr key={i} role="row" className="odd">
+                  <td>{i}</td>
+                  <td>{user.firstname}</td>
+                  <td>{user.lastname}</td>
+                  <td>{user.startdate}</td>
+                  <td>{user.department}</td>
+                  <td>{user.birthdate}</td>
+                  <td>{user.street}</td>
+                  <td>{user.city}</td>
+                  <td>{user.state}</td>
+                  <td>{user.zipcode}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
           <div

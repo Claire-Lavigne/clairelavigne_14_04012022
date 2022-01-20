@@ -8,50 +8,59 @@ import {
   Button,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import Modal from "./Modal";
 import states from "../data/states.json";
 import jobDepartments from "../data/jobDepartments.json";
 import { useDispatch } from "react-redux";
-import { createEmployee } from "../redux/reducers/employeeSlice";
+import { addEmployee } from "../redux/reducers/employeeSlice";
+import Modal from "react-abc-modal";
 
 const Form = () => {
   const [user, setUser] = useState({});
   const [displayError, setDisplayError] = useState(false);
   const [isOpen, setOpen] = useState(false);
+
+  const openModal = () => {
+    setOpen(true);
+  };
+
+  const closeModal = () => {
+    setOpen(false);
+  };
+
   const dispatch = useDispatch();
   const saveEmployee = (e) => {
     e.preventDefault();
     const data = {
       id: Date.now(),
-      employee: user,
+      ...user,
     };
 
-    if (Object.keys(data.employee).length === 0) {
+    if (Object.keys(data).length === 0) {
       setDisplayError(true);
       return false;
     } else if (
-      data.employee.firstname === undefined ||
-      data.employee.lastname === undefined ||
-      data.employee.birthdate === undefined ||
-      data.employee.startdate === undefined ||
-      data.employee.department === undefined ||
-      data.employee.addressStreet === undefined ||
-      data.employee.addressCity === undefined ||
-      data.employee.addressState === undefined ||
-      data.employee.addressZipcode === undefined
+      data.firstname === undefined ||
+      data.lastname === undefined ||
+      data.birthdate === undefined ||
+      data.startdate === undefined ||
+      data.department === undefined ||
+      data.street === undefined ||
+      data.city === undefined ||
+      data.state === undefined ||
+      data.zipcode === undefined
     ) {
       setDisplayError(true);
       return false;
     }
 
     setDisplayError(false);
-    dispatch(createEmployee(data));
-    setOpen(true);
+    dispatch(addEmployee(data));
+    openModal();
   };
   return (
     <>
       <Box
-        id="createEmployee"
+        id="addEmployee"
         component="form"
         noValidate
         onSubmit={saveEmployee}
@@ -135,7 +144,7 @@ const Form = () => {
               required
               id="jobDepartment"
               label="Department"
-              value={user.department}
+              value={user.department || ""}
               select
               fullWidth
               onChange={(e) =>
@@ -160,7 +169,7 @@ const Form = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={user.addressStreet === undefined}
+              error={user.street === undefined}
               required
               id="street"
               label="Street"
@@ -168,14 +177,14 @@ const Form = () => {
               onChange={(e) =>
                 setUser({
                   ...user,
-                  addressStreet: e.target.value.trim(),
+                  street: e.target.value.trim(),
                 })
               }
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={user.addressCity === undefined}
+              error={user.city === undefined}
               required
               id="city"
               label="City"
@@ -183,24 +192,24 @@ const Form = () => {
               onChange={(e) =>
                 setUser({
                   ...user,
-                  addressCity: e.target.value.trim(),
+                  city: e.target.value.trim(),
                 })
               }
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={user.addressState === undefined}
+              error={user.state === undefined}
               required
               id="state"
               label="State"
-              value={user.addressState}
+              value={user.state || ""}
               select
               fullWidth
               onChange={(e) =>
                 setUser({
                   ...user,
-                  addressState: e.target.value.trim(),
+                  state: e.target.value.trim(),
                 })
               }
               sx={{ textAlign: "left" }}
@@ -214,7 +223,7 @@ const Form = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={user.addressZipcode === undefined}
+              error={user.zipcode === undefined}
               required
               id="zipCode"
               label="Zip Code"
@@ -223,7 +232,7 @@ const Form = () => {
               onChange={(e) =>
                 setUser({
                   ...user,
-                  addressZipcode: e.target.value.trim(),
+                  zipcode: e.target.value.trim(),
                 })
               }
             />
@@ -239,11 +248,16 @@ const Form = () => {
           Save
         </Button>
       </Box>
-      <Modal
-        isOpen={isOpen}
-        onClose={() => setOpen(false)}
-        closeOutside={true}
-      />
+      <Modal isOpen={isOpen} onClose={closeModal} closeOutside={true}>
+        <Typography
+          component="h3"
+          variant="h2"
+          sx={{ my: "3rem" }}
+          align="center"
+        >
+          Employee Created!
+        </Typography>
+      </Modal>
     </>
   );
 };

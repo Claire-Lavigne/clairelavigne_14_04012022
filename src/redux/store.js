@@ -3,6 +3,6 @@ import employeeReducer from "./reducers/employeeSlice";
 
 export default configureStore({
   reducer: {
-    employee: employeeReducer,
+    employees: employeeReducer,
   },
 });

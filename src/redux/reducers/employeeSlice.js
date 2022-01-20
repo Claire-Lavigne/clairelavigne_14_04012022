@@ -2,34 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const employeeSlice = createSlice({
   name: "employees",
-  initialState: [],
-  /*
-    user: {
-      id: "",
-      firstname: "",
-      lastname: "",
-      birthdate: "",
-      startdate: "",
-      address: {
-        street: "",
-        city: "",
-        state: "",
-        zipcode: "",
-      },
-      department: "",
-    },
-    */
+  initialState: {
+    user: [],
+  },
   reducers: {
-    createEmployee(state, action) {
-      state = action.payload;
+    addEmployee(state, action) {
+      state.user = [...state.user, action.payload];
     },
-    updateEmployee(state, action) {},
-    deleteEmployee(state, action) {},
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { createEmployee, updateEmployee, deleteEmployee } =
-  employeeSlice.actions;
+export const { addEmployee } = employeeSlice.actions;
 
 export default employeeSlice.reducer;

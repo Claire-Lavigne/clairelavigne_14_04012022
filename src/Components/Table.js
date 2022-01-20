@@ -1,8 +1,5 @@
-/*
-
 import React from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   Paper,
   Table,
@@ -52,7 +49,7 @@ function createData(
     zipcode,
   };
 }
-
+/*
 const rows = [
   createData(
     id,
@@ -66,29 +63,36 @@ const rows = [
     state,
     zipcode
   ),
-];
+];*/
 
 const EmployeeTable = () => {
-  const id = useSelector((state) => state.employee.id);
-  const firstname = useSelector((state) => state.employee.firstName);
-  const lastname = useSelector((state) => state.employee.lastName);
-  const birthdate = useSelector((state) => state.employee.birthdate);
-  const startdate = useSelector((state) => state.employee.startdate);
-  const department = useSelector((state) => state.employee.department);
-  const street = useSelector((state) => state.employee.addressStreet);
-  const city = useSelector((state) => state.employee.addressCity);
-  const state = useSelector((state) => state.employee.addressState);
-  const zipcode = useSelector((state) => state.employee.addressZipcode);
+  const allEmployees = useSelector((state) => state.employees.user);
+  const rows = [
+    allEmployees.map((user) =>
+      createData(
+        user.id,
+        user.firstname,
+        user.lastname,
+        user.birthdate,
+        user.startdate,
+        user.department,
+        user.street,
+        user.city,
+        user.state,
+        user.zipcode
+      )
+    ),
+  ];
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (e, newPage) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+  const handleChangeRowsPerPage = (e) => {
+    setRowsPerPage(+e.target.value);
     setPage(0);
   };
 
@@ -145,5 +149,3 @@ const EmployeeTable = () => {
 };
 
 export default EmployeeTable;
-
-*/
