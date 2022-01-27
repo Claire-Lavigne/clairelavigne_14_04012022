@@ -70,7 +70,7 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-const EmployeeTable = ({ order, orderBy, onRequestSort }) => {
+const EmployeeTable = () => {
   const allEmployees = useSelector((state) => state.employees.user);
 
   const rows = allEmployees.map((user) =>
@@ -88,34 +88,43 @@ const EmployeeTable = ({ order, orderBy, onRequestSort }) => {
     )
   );
 
+  const [order, setOrder] = React.useState("asc");
+  const [orderBy, setOrderBy] = React.useState("id");
   const [filteredRows, setFilteredRows] = useState(rows);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleChangePage = (e, newPage) => {
+  const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
-  const handleChangeRowsPerPage = (e) => {
-    setRowsPerPage(+e.target.value);
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
+
   const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
+    handleRequestSort(event, property);
   };
 
   const requestSearch = (e) => {
     if (e) {
-      const rowsToShow = rows.filter((row) => Object.values(row).includes(e));
+      const rowsToShow = rows.filter((row) => {
+        let rowArray = Object.values(row);
+        return rowArray.some(
+          (elt) => elt.toString().toLowerCase().indexOf(e.toLowerCase()) >= 0
+        );
+      });
       setFilteredRows(rowsToShow);
     } else {
       setFilteredRows(rows);
     }
   };
-
-  console.log("filtered rows : ", filteredRows);
-  console.log("rows : ", rows);
 
   return (
     <Paper
@@ -161,13 +170,17 @@ const EmployeeTable = ({ order, orderBy, onRequestSort }) => {
           <TableBody>
             {filteredRows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .sort(getComparator(order, orderBy))
+              .map((row, i) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={i}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
+                        <TableCell
+                          key={`${column.id}-${i}`}
+                          align={column.align}
+                        >
                           {column.format && typeof value === "number"
                             ? column.format(value)
                             : value}
@@ -181,7 +194,7 @@ const EmployeeTable = ({ order, orderBy, onRequestSort }) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 50, 100, { value: -1, label: "All" }]}
+        rowsPerPageOptions={[10, 25, 50, 100]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}
