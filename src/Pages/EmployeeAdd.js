@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import Form from "../Components/Form";
+import ABCModal from "../Components/ABCModal";
 
 const EmployeeAdd = () => {
+  const [isOpen, setOpen] = useState(false);
   return (
     <div className="container">
       <Typography
@@ -25,7 +27,8 @@ const EmployeeAdd = () => {
       >
         Create Employee
       </Typography>
-      <Form />
+      <Form setOpen={setOpen} />
+      <ABCModal isOpen={isOpen} setOpen={setOpen} />
     </div>
   );
 };

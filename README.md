@@ -1,6 +1,6 @@
 # HRnet
 
-Welcome to HRnet! This is our company's internal application to create and view employee records.
+A company's internal application to create and view employee records.
 
 # Available Scripts
 
@@ -11,5 +11,4 @@ Welcome to HRnet! This is our company's internal application to create and view 
 ## PROD
 
 - `npm run build`
-- `npm install -g serve`
-- `serve -s build`
+- `npx serve -s build`

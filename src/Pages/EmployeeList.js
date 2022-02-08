@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import EmployeeTable from "../Components/Table";
 
 const EmployeeList = () => {
