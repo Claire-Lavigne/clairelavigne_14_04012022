@@ -2,6 +2,8 @@
 
 A company's internal application to create and view employee records.
 
+<img src="https://github.com/Claire-Lavigne/repo-images/blob/main/HRnet.PNG" width="80%">
+
 # Available Scripts
 
 ## DEV
