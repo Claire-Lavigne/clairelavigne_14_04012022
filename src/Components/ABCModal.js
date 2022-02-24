@@ -3,11 +3,8 @@ import Typography from "@mui/material/Typography";
 import Modal from "react-abc-modal";
 
 const ABCModal = ({ isOpen, setOpen }) => {
-  const closeModal = () => {
-    setOpen(false);
-  };
   return (
-    <Modal isOpen={isOpen} onClose={closeModal} closeOutside={true}>
+    <Modal isOpen={isOpen} setOpen={setOpen} closeOutside={true} icon={true}>
       <Typography
         component="h3"
         variant="h2"
